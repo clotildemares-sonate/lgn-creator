@@ -67,7 +67,10 @@ export function generateEmailHTML(data: NewsletterData, newsletterNumber: string
     article3,
     tool,
     deuxioArticle,
+    toolImageUrl,
   } = data;
+
+  const toolImage = toolImageUrl || 'https://img.mailinblue.com/4032979/images/content_library/original/68da9b135ccbe12268dff65d.png';
 
   if (!article1 && !article2 && !article3 && !tool) {
     return '';
@@ -262,7 +265,7 @@ export function generateEmailHTML(data: NewsletterData, newsletterNumber: string
           <tr>
             <td align="center" style="padding: 15px 40px;">
               <a href="${urlTool}?utm_source=newsletter&utm_medium=email&utm_campaign=${campaignNumber}">
-                <img src="https://img.mailinblue.com/4032979/images/content_library/original/68da9b135ccbe12268dff65d.png" alt="${toolName}" width="100%" style="display: block; max-width: 520px;">
+                <img src="${toolImage}" alt="${toolName}" width="100%" style="display: block; max-width: 520px;">
               </a>
             </td>
           </tr>
