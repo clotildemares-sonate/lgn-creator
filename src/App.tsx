@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { FileText, Loader2, AlertCircle, Sparkles, Code, Save, Check, Database, PenLine } from 'lucide-react';
+import { FileText, Loader2, AlertCircle, Sparkles, Code, Save, Check, Database, PenLine, Send, ExternalLink } from 'lucide-react';
 import { ArticleData, NewsletterData } from './types';
 import { EditableArticle } from './components/EditableArticle';
 import { EditableTool } from './components/EditableTool';
 import { Archives } from './components/Archives';
 import { generateNewsletterHTML } from './utils/generateHTML';
+import { generateEmailHTML } from './utils/generateEmailHTML';
 
 type Tab = 'generation' | 'archives';
 
@@ -31,6 +32,8 @@ function App() {
   const [generatingSubject, setGeneratingSubject] = useState(false);
   const [savingNewsletter, setSavingNewsletter] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [sendingBrevo, setSendingBrevo] = useState(false);
+  const [brevoSuccess, setBrevoSuccess] = useState(false);
 
   const handleExtract = async () => {
     if (!newsletterNumber.trim()) {
@@ -275,6 +278,56 @@ function App() {
       setError(err instanceof Error ? err.message : 'Erreur inconnue');
     } finally {
       setSavingNewsletter(false);
+    }
+  };
+
+  const handleCreateBrevoCampaign = async () => {
+    if (!generatedHTML) {
+      setError('Veuillez d\'abord générer la newsletter');
+      return;
+    }
+    if (!emailSubject.trim()) {
+      setError('Veuillez d\'abord renseigner l\'objet de l\'email');
+      return;
+    }
+
+    setSendingBrevo(true);
+    setBrevoSuccess(false);
+    setError('');
+
+    try {
+      const newsletterData: NewsletterData = {
+        article1,
+        article2,
+        article3,
+        tool,
+        deuxioArticle,
+      };
+
+      const html = generateEmailHTML(newsletterData, newsletterNumber);
+
+      const response = await fetch('/api/create-brevo-campaign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `LaGrowthNews n° ${newsletterNumber}`.trim(),
+          subject: emailSubject.trim(),
+          html,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erreur lors de la création de la campagne Brevo');
+      }
+
+      setBrevoSuccess(true);
+      setTimeout(() => setBrevoSuccess(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+    } finally {
+      setSendingBrevo(false);
     }
   };
 
@@ -635,8 +688,34 @@ function App() {
                         )}
                         {saveSuccess ? 'Enregistrée' : 'Enregistrer'}
                       </button>
+                      <button
+                        onClick={handleCreateBrevoCampaign}
+                        disabled={sendingBrevo}
+                        className="px-4 py-2 text-sm bg-lgn-dark text-white rounded-lg hover:bg-lgn-dark/90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                      >
+                        {sendingBrevo ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : brevoSuccess ? (
+                          <Check className="w-4 h-4" />
+                        ) : (
+                          <Send className="w-4 h-4" />
+                        )}
+                        {brevoSuccess ? 'Brouillon créé' : 'Créer la campagne Brevo'}
+                      </button>
                     </div>
                   </div>
+
+                  {brevoSuccess && (
+                    <a
+                      href="https://app.brevo.com/marketing-campaigns/classic"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 p-4 bg-lgn-green/10 border border-lgn-green/30 rounded-lg text-sm text-lgn-dark hover:bg-lgn-green/20 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Brouillon créé dans Brevo. Clique ici pour le relire et l'envoyer.
+                    </a>
+                  )}
 
                   <textarea
                     value={generatedHTML}
