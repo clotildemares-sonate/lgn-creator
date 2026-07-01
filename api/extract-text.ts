@@ -33,19 +33,19 @@ voilà le format et le ton attendus :
 
 Contrairement aux chatbots classiques, Manus ne se contente pas de parler : il exécute.
 
-Capable de naviguer sur le web pour comparer des offres ou remplir des formulaires à votre place, il est aussi un redoutable créateur capable de générer des sites web complets, des présentations percutantes ou même des applications de bureau fonctionnelles en quelques secondes.
+Capable de naviguer sur le web pour comparer des offres ou remplir des formulaires à ta place, il est aussi un redoutable créateur capable de générer des sites web complets, des présentations percutantes ou même des applications de bureau fonctionnelles en quelques secondes.
 
-Que vous ayez besoin de déléguer une recherche de marché fastidieuse, de coder un outil métier sans toucher une ligne de script ou de transformer une idée brute en design pro, il agit comme un assistant multitâche ultra-rapide."
+Que tu aies besoin de déléguer une recherche de marché fastidieuse, de coder un outil métier sans toucher une ligne de script ou de transformer une idée brute en design pro, il agit comme un assistant multitâche ultra-rapide."
 
 ----
 
-"Marre de nettoyer du code HTML sale pour vos projets d'IA ?
+"Marre de nettoyer du code HTML sale pour tes projets d'IA ?
 
-Firecrawl est le chaînon manquant. Contrairement aux scrapers classiques, il transforme n'importe quel site (même les plus complexes en React ou Vue) en un Markdown ultra-propre ou en JSON structuré. C'est l'outil parfait pour alimenter vos pipelines RAG ou vos agents autonomes sans perdre de temps en pré-processing.
+Firecrawl est le chaînon manquant. Contrairement aux scrapers classiques, il transforme n'importe quel site (même les plus complexes en React ou Vue) en un Markdown ultra-propre ou en JSON structuré. C'est l'outil parfait pour alimenter tes pipelines RAG ou tes agents autonomes sans perdre de temps en pré-processing.
 
 En une ligne d'API, il gère les proxys, le rendu JavaScript et les anti-bots.
 
-Le petit plus : L'endpoint /extract qui permet de décrire en langage naturel ce que vous voulez récupérer (ex: "les prix et noms des produits")."
+Le petit plus : L'endpoint /extract qui permet de décrire en langage naturel ce que tu veux récupérer (ex: "les prix et noms des produits")."
 ---
 
 "Trouver des leads B2B en France, c'est souvent jongler entre trois onglets et un fichier Excel qui pleure.
