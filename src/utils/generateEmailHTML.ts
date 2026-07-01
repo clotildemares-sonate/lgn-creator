@@ -173,7 +173,7 @@ export function generateEmailHTML(data: NewsletterData, newsletterNumber: string
           </tr>
           <tr>
             <td style="padding: 5px 40px;">
-              <span style="display: inline-block; background-color: #FFBEFA; color: #FFFFFF; padding: 4px 10px; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tag1}</span>
+              <span style="background-color: #FFBEFA; color: #FFFFFF; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tag1}</span>
             </td>
           </tr>
           <tr>
@@ -198,7 +198,7 @@ export function generateEmailHTML(data: NewsletterData, newsletterNumber: string
           </tr>
           <tr>
             <td style="padding: 5px 40px;">
-              <span style="display: inline-block; background-color: #FFBEFA; color: #FFFFFF; padding: 4px 10px; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tag2}</span>
+              <span style="background-color: #FFBEFA; color: #FFFFFF; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tag2}</span>
             </td>
           </tr>
           <tr>
@@ -223,7 +223,7 @@ export function generateEmailHTML(data: NewsletterData, newsletterNumber: string
           </tr>
           <tr>
             <td style="padding: 5px 40px;">
-              <span style="display: inline-block; background-color: #FFBEFA; color: #FFFFFF; padding: 4px 10px; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tag3}</span>
+              <span style="background-color: #FFBEFA; color: #FFFFFF; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tag3}</span>
             </td>
           </tr>
           <tr>
@@ -256,7 +256,7 @@ export function generateEmailHTML(data: NewsletterData, newsletterNumber: string
           </tr>
           <tr>
             <td style="padding: 5px 40px;">
-              <span style="display: inline-block; background-color: #FFBEFA; color: #FFFFFF; padding: 4px 10px; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tagTool}</span>
+              <span style="background-color: #FFBEFA; color: #FFFFFF; font-family: Lato, sans-serif; font-size: 14px; font-style: italic;">${tagTool}</span>
             </td>
           </tr>
           <tr>
