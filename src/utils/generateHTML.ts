@@ -707,7 +707,7 @@ body:
                       text-valign: top
                       width: 100%
                       valign: top
-                  content: '<h2 class="default-heading2"><span style="color:#232323;font-family:lato;font-size:32px;"><strong>⚒️ L''outil de la Semaine : </strong></span><a href="${urlTool}?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=${campaignNumber}" target="_blank" rel="noopener noreferrer"><span style="color:#232323;font-family:lato;font-size:32px;">${toolName}</span></a></h2>'
+                  content: '<p class="default"><br></p><h2 class="default-heading2"><span style="color:#232323;font-family:lato;font-size:32px;"><strong>⚒️ L''outil de la Semaine : </strong></span><a href="${urlTool}?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=${campaignNumber}" target="_blank" rel="noopener noreferrer"><span style="color:#232323;font-family:lato;font-size:32px;">${toolName}</span></a></h2>'
                 -
                   type: text
                   thumbnail: /assets/img/editor/element_text.svg
