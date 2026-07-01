@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, Loader2, AlertCircle, Sparkles, Code, Save, Check, Database, PenLine, Send } from 'lucide-react';
+import { FileText, Loader2, AlertCircle, Sparkles, Code, Save, Check, Database, PenLine, Send, Camera } from 'lucide-react';
 import { ArticleData, NewsletterData } from './types';
 import { EditableArticle } from './components/EditableArticle';
 import { EditableTool } from './components/EditableTool';
@@ -23,6 +23,9 @@ function App() {
   const [article3, setArticle3] = useState<ArticleData | null>(null);
   const [tool, setTool] = useState<ArticleData | null>(null);
   const [deuxioArticle, setDeuxioArticle] = useState<ArticleData | null>(null);
+  const [toolImageUrl, setToolImageUrl] = useState('');
+  const [generatingScreenshot, setGeneratingScreenshot] = useState(false);
+  const [screenshotError, setScreenshotError] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -59,6 +62,8 @@ function App() {
     setTool(null);
     setDeuxioArticle(null);
     setGeneratedHTML('');
+    setToolImageUrl('');
+    setScreenshotError('');
 
     try {
       const apiUrl = '/api/extract-text';
@@ -241,6 +246,7 @@ function App() {
       article3,
       tool,
       deuxioArticle,
+      toolImageUrl: toolImageUrl.trim() || undefined,
     };
 
     const html = generateNewsletterHTML(newsletterData, newsletterNumber);
@@ -280,6 +286,36 @@ function App() {
       setError(err instanceof Error ? err.message : 'Erreur inconnue');
     } finally {
       setSavingNewsletter(false);
+    }
+  };
+
+  const handleGenerateScreenshot = async () => {
+    if (!tool?.url) {
+      setScreenshotError('Aucune URL d\'outil disponible');
+      return;
+    }
+
+    setGeneratingScreenshot(true);
+    setScreenshotError('');
+
+    try {
+      const response = await fetch('/api/screenshot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: tool.url }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erreur lors de la capture');
+      }
+
+      setToolImageUrl(data.imageUrl);
+    } catch (err) {
+      setScreenshotError(err instanceof Error ? err.message : 'Erreur inconnue');
+    } finally {
+      setGeneratingScreenshot(false);
     }
   };
 
@@ -576,6 +612,53 @@ function App() {
                     onSummaryChange={(value) => setTool({ ...tool, summary: value })}
                     onTagChange={(value) => setTool({ ...tool, tag: value })}
                   />
+                )}
+
+                {tool && (
+                  <div className="bg-white rounded-lg border border-slate-200 p-6 space-y-4">
+                    <div className="flex items-center justify-between gap-4">
+                      <h3 className="text-sm font-semibold text-slate-700">Image de l'outil</h3>
+                      <button
+                        onClick={handleGenerateScreenshot}
+                        disabled={generatingScreenshot || !tool.url}
+                        className="px-4 py-2 text-sm bg-lgn-green text-white rounded-lg hover:bg-lgn-green/90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                      >
+                        {generatingScreenshot ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Camera className="w-4 h-4" />
+                        )}
+                        {toolImageUrl ? 'Régénérer la capture' : 'Capturer le site de l\'outil'}
+                      </button>
+                    </div>
+
+                    <p className="text-xs text-slate-500">
+                      Sans capture, l'image par défaut est utilisée. Tu peux aussi coller une URL d'image manuellement.
+                    </p>
+
+                    <input
+                      type="url"
+                      value={toolImageUrl}
+                      onChange={(e) => setToolImageUrl(e.target.value)}
+                      placeholder="URL de l'image (auto-remplie par la capture)"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lgn-green focus:border-transparent outline-none transition-all text-sm"
+                    />
+
+                    {screenshotError && (
+                      <div className="flex items-start gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                        <p className="text-red-800 text-sm">{screenshotError}</p>
+                      </div>
+                    )}
+
+                    {toolImageUrl && (
+                      <img
+                        src={toolImageUrl}
+                        alt="Aperçu de l'outil"
+                        className="w-full max-w-lg rounded-lg border border-slate-200"
+                      />
+                    )}
+                  </div>
                 )}
 
                 {deuxioArticle && (

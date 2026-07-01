@@ -62,11 +62,14 @@ export function generateNewsletterHTML(data: NewsletterData, newsletterNumber: s
     article3,
     tool,
     deuxioArticle,
+    toolImageUrl,
   } = data;
 
   if (!article1 || !article2 || !article3 || !tool) {
     return '';
   }
+
+  const toolImage = toolImageUrl || 'https://img.mailinblue.com/4032979/images/content_library/original/68da9b135ccbe12268dff65d.png';
 
   const title1 = escapeForYAML(article1.title || extractTitle(article1.summary));
   const title2 = escapeForYAML(article2.title || extractTitle(article2.summary));
@@ -757,7 +760,7 @@ body:
                       width: 100%
                       valign: top
                   content:
-                    src: 'https://img.mailinblue.com/4032979/images/content_library/original/68da9b135ccbe12268dff65d.png'
+                    src: '${toolImage}'
                     alt: ${toolName}
                     href: '${urlTool}?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=${campaignNumber}'
                 -

@@ -14,4 +14,5 @@ export interface NewsletterData {
   article3: ArticleData | null;
   tool: ArticleData | null;
   deuxioArticle: ArticleData | null;
+  toolImageUrl?: string;
 }
